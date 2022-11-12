@@ -1,16 +1,20 @@
 package testscripts;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import base.PredefinedActions;
 import pages.LoginPage;
+import utility.ExcelOperations;
 
 public class LoginTest {
 
 	@Test(dataProvider = "LoginDataProvider")
-	public void tc1(String url, String uname, String password, boolean isLoginSuccessful, boolean flag) {
+	public void tc1(String url, String uname, String password, boolean isLoginSuccessful) {
 		System.out.println("STEP - Launch Chrome Browser & Hit url");
 		PredefinedActions.start(url);
 		
@@ -40,7 +44,19 @@ public class LoginTest {
 	}
 	
 	@DataProvider(name = "LoginDataProvider")
-	public Object[][] getLoginData(){
+	public Object[][] getLoginData() throws IOException {
+		Object[][] data;
+		String fileName = ".//testdata//LoginData.xlsx";
+		try {
+			data = ExcelOperations.readExcelData(fileName, "Data");
+		} catch (IOException e) {
+			data = ExcelOperations.readExcelData(".//testdata1//LoginData.xlsx", "Data");
+		}		
+		return data;	
+	}
+	
+	@DataProvider(name = "LoginDataProvider1")
+	public Object[][] getLoginData1(){
 		
 		Object[][] data = new Object[2][4];
 		data[0][0] = "https://harshaug2022-trials76.orangehrmlive.com";
@@ -55,6 +71,7 @@ public class LoginTest {
 				
 		return data;	
 	}
+	
 	
 	
 	@Test
