@@ -1,6 +1,5 @@
 package testscripts;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.testng.Assert;

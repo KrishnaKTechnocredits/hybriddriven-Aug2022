@@ -1,5 +1,7 @@
 package base;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -7,14 +9,17 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import customexceptions.ElementNotEnabledException;
 
 public class PredefinedActions {
+	
 	protected static WebDriver driver;
 	static WebDriverWait wait;
+	private static Actions actions;
 	
 	protected PredefinedActions() {
 		
@@ -27,6 +32,7 @@ public class PredefinedActions {
 		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, 60);
+		actions = new Actions(driver);
 	}
 	
 	protected WebElement getElement(String locatorType, String locatorValue, boolean isWaitRequired) {
@@ -128,6 +134,18 @@ public class PredefinedActions {
 		return e.isDisplayed();
 	}
 	
+	protected void mouseHoverOnElement(WebElement e) {
+		actions.moveToElement(e).build().perform();
+	}
+	
+	protected List<String> getListOfWebElementText(List<WebElement> list) {
+		List<String> listOfElementText = new ArrayList<String>();
+		for(WebElement e : list) {
+			listOfElementText.add(e.getText());
+		}
+		return listOfElementText;
+	}
+		
 	public String getPageTitle() {
 		return driver.getTitle();
 	}
