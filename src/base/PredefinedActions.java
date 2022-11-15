@@ -98,6 +98,16 @@ public class PredefinedActions {
 		return element;
 	}
 	
+	protected boolean waitForVisibilityOfElement(WebElement e) {
+		try {
+			wait.until(ExpectedConditions.visibilityOf(e));
+		}catch(Exception exception) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	protected void setText(WebElement e, String text) {
 		scrollToElement(e);
 		if(e.isEnabled())
