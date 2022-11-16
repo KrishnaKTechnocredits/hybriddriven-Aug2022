@@ -35,7 +35,8 @@ public class DashboardPage extends PredefinedActions {
 	private WebElement aboutContentFirstP;
 	
 	private String aboutBtnLocator = "//a[text()='%s']";
-
+	private String menuLocator = "//a[contains(text(),'%s')]";
+	
 	public DashboardPage() {
 		PageFactory.initElements(driver, this);
 	}
@@ -109,5 +110,29 @@ public class DashboardPage extends PredefinedActions {
 		WebElement e = getElement("xpath", locatorValue, false);
 		clickOnElement(e, false);
 	}
-
+	
+	enum Menu{
+		EMPLOYEELIST("Employee List"),
+		MYINFO("My Info"),
+		DIRECTORY("Directory");
+		
+		public String menuItem;
+		
+		private Menu(String menuTitle) {
+			this.menuItem = menuTitle;
+		}
+	}
+	
+	enum Browser{
+		CHROME,
+		FF,
+		SAFARI;
+	}
+	
+	
+	public void gotoMenu(Menu menuName) {
+		String menuText = menuName.menuItem;
+		String locatorValue = String.format(menuLocator, menuText);
+		clickOnElement(getElement("xpath", locatorValue, true),false);
+	}
 }
