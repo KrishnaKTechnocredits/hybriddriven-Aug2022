@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -26,14 +25,14 @@ public class DashboardTest extends TestBase{
 				Arrays.asList("Buzz Latest Posts","Quick Access", "My Actions",
 						"Latest Documents", "Latest News", "Employees on Leave Today",
 						"Time At Work", "Headcount by Location", "COVID-19 Report"));
-		
+
 		System.out.println("STEP - Get list of all widgets text");
 		List<String> listOfActualWidgetsText = dashboardPage.getAllWidgetsText();
 	
 		System.out.println("VERIFY - text of all widgets");
 		Assert.assertEquals(listOfActualWidgetsText, listOfExpectedWidgetsText);
 	}
-	
+
 	@Test
 	public void verfiyProfileAboutContentTest() {
 		DashboardPage dashboardPage = new DashboardPage();

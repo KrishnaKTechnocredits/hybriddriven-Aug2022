@@ -36,12 +36,12 @@ public class ExcelOperations {
 					if (DateUtil.isCellDateFormatted(cell)) {
 						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 						data[rowIndex][colIndex] = cell.getDateCellValue();
-					}else
+					} else
 						data[rowIndex][colIndex] = cell.getNumericCellValue();
 				}
 			}
 		}
-		
+		wb.close();
 		return data;
 	}
 }
