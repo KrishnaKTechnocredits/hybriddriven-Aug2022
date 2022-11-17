@@ -38,7 +38,6 @@ public class LoginTest {
 			String actualCurrentURL = loginPage.getPageURL();
 			Assert.assertTrue(actualCurrentURL.endsWith(expectedUrlContent));
 		}
-		
 		PredefinedActions.closeBrowser();
 	}
 	

@@ -1,5 +1,5 @@
 package testscripts;
 
-public class MyInfoTest {
+public class MyInfoTest extends TestBase {
 
 }
