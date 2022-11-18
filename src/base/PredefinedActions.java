@@ -202,4 +202,20 @@ public class PredefinedActions {
 			e.printStackTrace();
 		}
 	}
+
+	protected void clickUingJS(WebElement ele) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click()", ele);
+	}
+
+	protected void sendKeyUsingJS(WebElement ele, String text) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].value='" + text + "'", ele);
+	}
+
+	protected void markCheckbox(WebElement ele, boolean checkedOrUnchecked) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].checked=" + checkedOrUnchecked + "", ele);
+	}
+
 }
