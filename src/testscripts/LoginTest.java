@@ -3,22 +3,24 @@ package testscripts;
 import java.io.IOException;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import base.PredefinedActions;
+import constant.ConstantValue;
 import pages.LoginPage;
 import utility.ExcelOperations;
 
 public class LoginTest {
 
+	
 	@Test(dataProvider = "LoginDataProvider")
 	public void tc1(String url, String uname, String password, boolean isLoginSuccessful) {
 		System.out.println("STEP - Launch Chrome Browser & Hit url");
 		PredefinedActions.start(url);
-		
 		System.out.println("STEP - Enter valid login credentials");
-		LoginPage loginPage = new LoginPage();
+		LoginPage loginPage = LoginPage.getObject();
 		loginPage.login(uname, password);
 		
 		if(isLoginSuccessful) {
@@ -38,20 +40,22 @@ public class LoginTest {
 			String actualCurrentURL = loginPage.getPageURL();
 			Assert.assertTrue(actualCurrentURL.endsWith(expectedUrlContent));
 		}
-		
-		PredefinedActions.closeBrowser();
 	}
 	
 	@DataProvider(name = "LoginDataProvider")
 	public Object[][] getLoginData() throws IOException {
 		Object[][] data;
-		String fileName = ".//testdata//LoginData.xlsx";
 		try {
-			data = ExcelOperations.readExcelData(fileName, "Data");
+			data = ExcelOperations.readExcelData(ConstantValue.LOGINDATA, "Data");
 		} catch (IOException e) {
 			data = ExcelOperations.readExcelData(".//testdata1//LoginData.xlsx", "Data");
 		}		
 		return data;	
+	}
+	
+	@AfterMethod
+	public void tearDown() {
+		PredefinedActions.closeBrowser();
 	}
 	
 	@DataProvider(name = "LoginDataProvider1")
@@ -79,7 +83,7 @@ public class LoginTest {
 		PredefinedActions.start("https://harshaug2022-trials76.orangehrmlive.com");
 		
 		System.out.println("STEP - Enter valid login credentials");
-		LoginPage loginPage = new LoginPage();
+		LoginPage loginPage = LoginPage.getObject();
 		loginPage.login("admin", "MPCs0K@ce111");
 		
 		System.out.println("VERIFY - home page is displayed");

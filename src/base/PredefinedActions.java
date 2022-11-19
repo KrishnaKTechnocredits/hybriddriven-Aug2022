@@ -1,11 +1,17 @@
 package base;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.compress.harmony.pack200.ConstantPoolEntry;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import constant.ConstantValue;
 import customexceptions.ElementNotEnabledException;
 
 public class PredefinedActions {
@@ -26,12 +33,12 @@ public class PredefinedActions {
 	}
 	
 	public static void start(String url) {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver_106.exe");
+		System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		wait = new WebDriverWait(driver, 60);
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		wait = new WebDriverWait(driver, ConstantValue.EXPLICTWAITTIME);
 		actions = new Actions(driver);
 	}
 	
@@ -164,6 +171,12 @@ public class PredefinedActions {
 			value = e.getAttribute("value");
 		}
 		return value;
+	}
+	
+	public static void takeScreenShot(String screenShotName) throws IOException {
+		TakesScreenshot screenshot = (TakesScreenshot)driver;
+		File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(srcFile, new File(ConstantValue.SCREENSHOTLOCATION+screenShotName+ConstantValue.SCREENSHOTEXT));
 	}
 		
 	public String getPageTitle() {

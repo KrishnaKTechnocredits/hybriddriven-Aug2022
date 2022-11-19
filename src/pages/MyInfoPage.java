@@ -5,14 +5,22 @@ import org.openqa.selenium.support.PageFactory;
 import base.PredefinedActions;
 
 public class MyInfoPage extends PredefinedActions{
-
+	private static MyInfoPage myInfoPage;
+	
 	private String menuPagemenu = "//a[contains(text(),'%s')]";
 	
-	public MyInfoPage(){
-		PageFactory.initElements(driver, this);
+	private MyInfoPage(){
+		
 	}
 	
-	enum MyInfoMenu{
+	public static MyInfoPage getObject() {
+		if(myInfoPage == null)
+			myInfoPage = new MyInfoPage();
+		PageFactory.initElements(driver, myInfoPage);
+		return myInfoPage;
+	}
+	
+	public enum MyInfoMenu{
 		PERSONALDETAILS("Personal Details"),
 		JOB("Job"),
 		SALARY("Salary"),

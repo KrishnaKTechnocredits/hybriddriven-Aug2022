@@ -10,14 +10,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import base.PredefinedActions;
 import pages.DashboardPage;
 
 public class DashboardTest extends TestBase{
 	
 	@Test
 	public void verifyWidgetsCountAndText() throws IOException {
-		DashboardPage dashboardPage = new DashboardPage();
-		
+		DashboardPage dashboardPage = DashboardPage.getObject();
 		System.out.println("VERIFY - Number of widgets on dashboard page");
 		int totalWidgets = dashboardPage.getNumberOfWidgets();
 		Assert.assertEquals(totalWidgets, 9, "totalWidegets was not displayed as expected, expected was 9, actual widgets displayed "+ totalWidgets);
@@ -29,14 +29,13 @@ public class DashboardTest extends TestBase{
 		
 		System.out.println("STEP - Get list of all widgets text");
 		List<String> listOfActualWidgetsText = dashboardPage.getAllWidgetsText();
-	
 		System.out.println("VERIFY - text of all widgets");
 		Assert.assertEquals(listOfActualWidgetsText, listOfExpectedWidgetsText);
 	}
 	
 	@Test
 	public void verfiyProfileAboutContentTest() {
-		DashboardPage dashboardPage = new DashboardPage();
+		DashboardPage dashboardPage = DashboardPage.getObject();
 		
 		System.out.println("STEP - Mouse hover on Profile and Click on Settings");
 		List<String> expectedProfileSettingOptions = new ArrayList<String>(Arrays.asList("Change Password", "About"));
